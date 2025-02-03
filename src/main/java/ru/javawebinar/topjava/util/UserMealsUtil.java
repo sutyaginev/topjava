@@ -47,7 +47,6 @@ public class UserMealsUtil {
                 ));
             }
         }
-
         return userMealWithExcesses;
     }
 
@@ -74,15 +73,17 @@ public class UserMealsUtil {
     private static List<UserMealWithExcess> filteredByFlatMap(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         return meals.stream()
                 .collect(Collectors.groupingBy(UserMeal::getDate)).values().stream()
-                .flatMap(mealsByDate -> mealsByDate.stream().
-                        filter(meal -> TimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime))
-                        .map(meal -> new UserMealWithExcess(
-                                meal.getDateTime(),
-                                meal.getDescription(),
-                                meal.getCalories(),
-                                mealsByDate.stream().mapToInt(UserMeal::getCalories).sum() > caloriesPerDay
-                        )))
+                .flatMap(mealsByDate -> {
+                    boolean excess = mealsByDate.stream().mapToInt(UserMeal::getCalories).sum() > caloriesPerDay;
+                    return mealsByDate.stream()
+                            .filter(meal -> TimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime))
+                            .map(meal -> new UserMealWithExcess(
+                                    meal.getDateTime(),
+                                    meal.getDescription(),
+                                    meal.getCalories(),
+                                    excess
+                            ));
+                })
                 .collect(Collectors.toList());
     }
-
 }

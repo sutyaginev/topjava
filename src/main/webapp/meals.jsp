@@ -9,12 +9,15 @@
 <h3><a href="index.html">Home</a></h3>
 <hr>
 <h2>Meals</h2>
+<p><a href="meals?action=add">Add meal</a></p>
 <section>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Date</th>
             <th>Description</th>
             <th>Calories</th>
+            <th></th>
+            <th></th>
         </tr>
         <c:forEach var="meal" items="${meals}">
             <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
@@ -30,6 +33,8 @@
                 <td>
                     <span style="color: ${color};">${meal.calories}</span>
                 </td>
+                <td><a href="meals?id=${meal.id}&action=edit">Update</a></td>
+                <td><a href="meals?id=${meal.id}&action=delete">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

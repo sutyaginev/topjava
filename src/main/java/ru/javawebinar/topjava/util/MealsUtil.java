@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class MealsUtil {
     public static void main(String[] args) {
         List<Meal> meals = initialMeal();
-
         List<MealTo> mealsTo = filteredByStreams(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
         mealsTo.forEach(System.out::println);
     }
@@ -35,23 +34,25 @@ public class MealsUtil {
 
     public static List<MealTo> filteredByStreams(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Predicate<Meal> timeFilter = meal -> TimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime);
-        return mapToMealTo(meals, getCaloriesSumByDate(meals), caloriesPerDay, timeFilter);
+        return mapToMealTo(meals, caloriesPerDay, timeFilter);
     }
 
     public static List<MealTo> filteredByStreams(List<Meal> meals, int caloriesPerDay) {
-        return mapToMealTo(meals, getCaloriesSumByDate(meals), caloriesPerDay, meal -> true);
+        return mapToMealTo(meals, caloriesPerDay, meal -> true);
+    }
+
+    private static List<MealTo> mapToMealTo(List<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
+        Map<LocalDate, Integer> caloriesSumByDate = getCaloriesSumByDate(meals);
+
+        return meals.stream()
+                .filter(filter)
+                .map(meal -> createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
     }
 
     private static Map<LocalDate, Integer> getCaloriesSumByDate(List<Meal> meals) {
         return meals.stream()
                 .collect(Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories)));
-    }
-
-    private static List<MealTo> mapToMealTo(List<Meal> meals, Map<LocalDate, Integer> caloriesSumByDate, int caloriesPerDay, Predicate<Meal> filter) {
-        return meals.stream()
-                .filter(filter)
-                .map(meal -> createTo(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
-                .collect(Collectors.toList());
     }
 
     private static MealTo createTo(Meal meal, boolean excess) {

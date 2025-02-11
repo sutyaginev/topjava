@@ -21,18 +21,11 @@
         </tr>
         <c:forEach var="meal" items="${meals}">
             <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
-            <tr>
-                <c:set var="color" value="${meal.excess ? 'red' : 'green'}" />
-
-                <td>
-                    <span style="color: ${color};">${TimeUtil.dateTimeToString(meal.dateTime)}</span>
-                </td>
-                <td>
-                    <span style="color: ${color};">${meal.description}</span>
-                </td>
-                <td>
-                    <span style="color: ${color};">${meal.calories}</span>
-                </td>
+            <c:set var="color" value="${meal.excess ? 'red' : 'green'}" />
+            <tr style="color: ${color};">
+                <td>${TimeUtil.dateTimeToString(meal.dateTime)}</td>
+                <td>${meal.description}</td>
+                <td>${meal.calories}</td>
                 <td><a href="meals?id=${meal.id}&action=edit">Update</a></td>
                 <td><a href="meals?id=${meal.id}&action=delete">Delete</a></td>
             </tr>

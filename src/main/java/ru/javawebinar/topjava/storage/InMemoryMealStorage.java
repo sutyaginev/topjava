@@ -9,32 +9,27 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MapMealStorage implements Storage {
+public class InMemoryMealStorage implements MealStorage {
     private final Map<Integer, Meal> storage = new ConcurrentHashMap<>();
-    private final AtomicInteger ID_COUNTER = new AtomicInteger(0);
+    private final AtomicInteger idCounter = new AtomicInteger(0);
 
     {
-        MealsUtil.initialMeal().forEach(this::save);
+        MealsUtil.initialMeal().forEach(this::createOrUpdate);
     }
 
     @Override
-    public void save(Meal meal) {
+    public Meal createOrUpdate(Meal meal) {
         Integer id = meal.getId();
         if (id == null) {
-            meal.setId(ID_COUNTER.incrementAndGet());
+            meal.setId(idCounter.incrementAndGet());
+            return storage.put(meal.getId(), meal);
         }
-
-        storage.put(meal.getId(), meal);
+        return storage.computeIfPresent(id, (key, value) -> meal);
     }
 
     @Override
     public Meal get(int id) {
         return storage.get(id);
-    }
-
-    @Override
-    public void update(Meal meal) {
-        storage.put(meal.getId(), meal);
     }
 
     @Override

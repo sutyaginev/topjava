@@ -14,7 +14,6 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <hr>
-<c:set var="action" value="${param.action}" />
 <h2>${meal.id != null ? "Edit" : "Add"} meal</h2>
 <section>
     <form method="post" action="meals">

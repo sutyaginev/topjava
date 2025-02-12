@@ -2,8 +2,8 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.storage.MealStorage;
 import ru.javawebinar.topjava.storage.InMemoryMealStorage;
+import ru.javawebinar.topjava.storage.MealStorage;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletConfig;
@@ -58,7 +58,7 @@ public class MealServlet extends HttpServlet {
         }
 
         request.setAttribute("meal", meal);
-        request.getRequestDispatcher("/edit.jsp").forward(request, response);
+        request.getRequestDispatcher("/editMeal.jsp").forward(request, response);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MealServlet extends HttpServlet {
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
 
-        storage.createOrUpdate(meal);
+        storage.save(meal);
         response.sendRedirect("meals");
     }
 }

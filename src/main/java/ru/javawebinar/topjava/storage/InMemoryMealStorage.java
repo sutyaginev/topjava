@@ -14,11 +14,11 @@ public class InMemoryMealStorage implements MealStorage {
     private final AtomicInteger idCounter = new AtomicInteger(0);
 
     {
-        MealsUtil.initialMeal().forEach(this::createOrUpdate);
+        MealsUtil.initialMeal().forEach(this::save);
     }
 
     @Override
-    public Meal createOrUpdate(Meal meal) {
+    public Meal save(Meal meal) {
         Integer id = meal.getId();
         if (id == null) {
             meal.setId(idCounter.incrementAndGet());

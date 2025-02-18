@@ -37,7 +37,7 @@ public class InMemoryUserRepository implements UserRepository {
             return user;
         }
         // handle case: update, but not present in storage
-        return usersMap.computeIfPresent(user.getId(), (id, oldMeal) -> user);
+        return usersMap.computeIfPresent(user.getId(), (id, oldUser) -> user);
     }
 
     @Override

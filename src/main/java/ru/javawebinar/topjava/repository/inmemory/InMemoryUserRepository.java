@@ -24,7 +24,6 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
-        usersMap.remove(id);
         return usersMap.remove(id) != null;
     }
 
@@ -59,7 +58,7 @@ public class InMemoryUserRepository implements UserRepository {
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
         return usersMap.values().stream()
-                .filter(user -> email.equals(user.getEmail()))
+                .filter(user -> email.equalsIgnoreCase(user.getEmail()))
                 .findFirst()
                 .orElse(null);
     }

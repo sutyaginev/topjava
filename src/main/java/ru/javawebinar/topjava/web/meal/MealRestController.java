@@ -9,6 +9,8 @@ import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
@@ -17,9 +19,9 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkIsNew;
 @Controller
 public class MealRestController {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private MealService service;
+    private final MealService service;
 
     public MealRestController(MealService service) {
         this.service = service;
@@ -55,5 +57,12 @@ public class MealRestController {
         log.info("update {} with id={} of user {}", meal, id, userId);
         assureIdConsistent(meal, id);
         service.update(meal, userId);
+    }
+
+    public List<MealTo> getBetweenDateTime(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+        int userId = SecurityUtil.authUserId();
+        log.info("get in interval {} - {} and {} - {} of user {}", startDate, endDate, startTime, endTime, userId);
+        List<Meal> mealsByDate = MealsUtil.getFilteredByDate(service.getAll(userId), startDate, endDate);
+        return MealsUtil.getFilteredTos(mealsByDate, SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);
     }
 }

@@ -28,6 +28,12 @@ public class MealServlet extends HttpServlet {
     }
 
     @Override
+    public void destroy() {
+        applicationContext.close();
+        super.destroy();
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
@@ -38,7 +44,7 @@ public class MealServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("calories")));
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        if (request.getParameter("id").isEmpty()) {
+        if (meal.isNew()) {
             mealRestController.create(meal);
         } else {
             mealRestController.update(meal, getId(request));

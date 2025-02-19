@@ -27,6 +27,12 @@ public class MealsUtil {
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
     );
 
+    public static List<Meal> getFilteredByDate(Collection<Meal> meals, LocalDate startDate, LocalDate endDate) {
+        return meals.stream()
+                .filter(meal -> DateTimeUtil.isBetweenDates(meal.getDate(), startDate, endDate))
+                .collect(Collectors.toList());
+    }
+
     public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
         return filterByPredicate(meals, caloriesPerDay, meal -> true);
     }

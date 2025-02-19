@@ -32,7 +32,7 @@ public class SpringMain {
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             List<MealTo> betweenDateTime = mealRestController.getBetweenDateTime(
                     LocalDate.of(2020, Month.JANUARY, 30),
-                    LocalDate.of(2020, Month.JANUARY, 31),
+                    LocalDate.of(2020, Month.JANUARY, 30),
                     LocalTime.of(10, 0),
                     LocalTime.of(15, 0)
             );

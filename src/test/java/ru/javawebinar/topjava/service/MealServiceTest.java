@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 @ContextConfiguration({
@@ -44,9 +45,15 @@ public class MealServiceTest {
         assertMatch(meal, MealTestData.userMeal1);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getNotUserMeal() throws Exception {
-        service.get(ADMIN_MEAL_ID, USER_ID);
+        assertThrows(NotFoundException.class, () -> service.get(ADMIN_MEAL_ID, USER_ID));
+    }
+
+    @Test
+    public void getNotExistMeal() throws Exception {
+        assertThrows(NotFoundException.class, () -> service.get(NOT_EXIST_MEAL_ID, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.get(NOT_EXIST_MEAL_ID, ADMIN_ID));
     }
 
     @Test
@@ -55,9 +62,15 @@ public class MealServiceTest {
         assertThrows(NotFoundException.class, () -> service.get(USER_MEAL_ID, USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteNotUserMeal() throws Exception {
-        service.delete(ADMIN_MEAL_ID, USER_ID);
+        assertThrows(NotFoundException.class, () -> service.delete(ADMIN_MEAL_ID, USER_ID));
+    }
+
+    @Test
+    public void deleteNotExistMeal() throws Exception {
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_EXIST_MEAL_ID, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_EXIST_MEAL_ID, ADMIN_ID));
     }
 
     @Test
@@ -86,9 +99,9 @@ public class MealServiceTest {
         assertMatch(service.get(USER_MEAL_ID, USER_ID), getUpdated());
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void updateNotUserMeal() throws Exception {
-        service.update(getUpdatedAdmin(), USER_ID);
+        assertThrows(NotFoundException.class, () -> service.update(getUpdatedAdmin(), USER_ID));
     }
 
     @Test

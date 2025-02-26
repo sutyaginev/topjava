@@ -20,9 +20,9 @@ public class MealTestData {
     public static final Meal userMeal5 = new Meal(USER_MEAL_ID + 4, LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
     public static final Meal userMeal6 = new Meal(USER_MEAL_ID + 5, LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500);
     public static final Meal userMeal7 = new Meal(USER_MEAL_ID + 6, LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410);
-    public static final Meal adminMeal8 = new Meal(ADMIN_MEAL_ID, LocalDateTime.of(2020, Month.JANUARY, 30, 9, 0), "Завтрак", 600);
-    public static final Meal adminMeal9 = new Meal(ADMIN_MEAL_ID + 1, LocalDateTime.of(2020, Month.JANUARY, 30, 12, 0), "Обед", 1100);
-    public static final Meal adminMeal10 = new Meal(ADMIN_MEAL_ID + 2, LocalDateTime.of(2020, Month.JANUARY, 30, 19, 0), "Ужин", 510);
+    public static final Meal adminMeal1 = new Meal(ADMIN_MEAL_ID, LocalDateTime.of(2020, Month.JANUARY, 30, 9, 0), "Завтрак", 600);
+    public static final Meal adminMeal2 = new Meal(ADMIN_MEAL_ID + 1, LocalDateTime.of(2020, Month.JANUARY, 30, 12, 0), "Обед", 1100);
+    public static final Meal adminMeal3 = new Meal(ADMIN_MEAL_ID + 2, LocalDateTime.of(2020, Month.JANUARY, 30, 19, 0), "Ужин", 510);
 
     public static Meal getNew() {
         return new Meal(null, LocalDateTime.of(2020, Month.JANUARY, 30, 11, 0), "Новый завтрак", 400);
@@ -30,6 +30,10 @@ public class MealTestData {
 
     public static Meal getUpdated() {
         return new Meal(userMeal1.getId(), userMeal1.getDateTime(), "Обновленный завтрак", 400);
+    }
+
+    public static Meal getUpdatedAdmin() {
+        return new Meal(adminMeal1.getId(), adminMeal1.getDateTime(), "Обновленный завтрак Админа", 600);
     }
 
     public static void assertMatch(Meal actual, Meal expected) {

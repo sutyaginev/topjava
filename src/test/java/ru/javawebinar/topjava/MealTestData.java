@@ -30,11 +30,11 @@ public class MealTestData {
     }
 
     public static Meal getUpdated() {
-        return new Meal(userMeal1.getId(), LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Обновленный завтрак", 400);
+        return new Meal(userMeal1.getId(), LocalDateTime.of(2020, Month.JANUARY, 28, 10, 0), "Обновленный завтрак", 400);
     }
 
     public static Meal getUpdatedAdmin() {
-        return new Meal(adminMeal1.getId(), LocalDateTime.of(2020, Month.JANUARY, 30, 9, 0), "Обновленный завтрак Админа", 600);
+        return new Meal(adminMeal1.getId(), LocalDateTime.of(2020, Month.JANUARY, 28, 9, 0), "Обновленный завтрак Админа", 600);
     }
 
     public static void assertMatch(Meal actual, Meal expected) {

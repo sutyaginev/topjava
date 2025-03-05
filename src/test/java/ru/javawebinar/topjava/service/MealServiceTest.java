@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.AfterClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.util.TimeLogUtil;
+import ru.javawebinar.topjava.util.TestDurationLogUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -30,16 +30,14 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
+    @ClassRule
+    public static TestDurationLogUtil.SummaryRule summaryRule = new TestDurationLogUtil.SummaryRule();
+
     @Rule
-    public TimeLogUtil.StopwatchTest stopwatch = new TimeLogUtil.StopwatchTest();
+    public TestDurationLogUtil.StopwatchTest stopwatch = new TestDurationLogUtil.StopwatchTest();
 
     @Autowired
     private MealService service;
-
-    @AfterClass
-    public static void printSummary() {
-        TimeLogUtil.printResults();
-    }
 
     @Test
     public void delete() {

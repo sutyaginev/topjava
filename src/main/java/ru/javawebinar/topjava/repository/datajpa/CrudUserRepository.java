@@ -9,12 +9,12 @@ import ru.javawebinar.topjava.model.User;
 
 @Transactional(readOnly = true)
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
+
     @Transactional
     @Modifying
 //    @Query(name = User.DELETE)
     @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(@Param("id") int id);
 
-    @Transactional(readOnly = true)
     User getByEmail(String email);
 }

@@ -20,7 +20,7 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
 @RequestMapping(value = "/meals")
-public class JspMealController extends MealRestController {
+public class JspMealController extends AbstractMealController {
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
@@ -30,7 +30,7 @@ public class JspMealController extends MealRestController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("meal", new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), "", 1000));
+        model.addAttribute("meal", new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000));
         return "mealForm";
     }
 

@@ -66,12 +66,7 @@ public class MealTo {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + calories;
-        result = 31 * result + (excess ? 1 : 0);
-        return result;
+        return Objects.hash(id, dateTime, description, calories, excess);
     }
 
     @Override

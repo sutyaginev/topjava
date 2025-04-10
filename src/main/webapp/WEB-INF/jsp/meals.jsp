@@ -75,11 +75,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle"><spring:message code="meal.add"/></h4>
+                <h4 class="modal-title"><spring:message code="meal.add"/></h4>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="detailsForm">
                     <input type="hidden" id="id" name="id">
+
                     <div class="form-group">
                         <label for="dateTime" class="col-form-label"><spring:message code="meal.dateTime"/></label>
                         <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
@@ -87,20 +88,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="col-form-label"><spring:message
-                                code="meal.description"/></label>
+                        <label for="description" class="col-form-label"><spring:message code="meal.description"/></label>
                         <input type="text" class="form-control" id="description" name="description"
                                placeholder="<spring:message code="meal.description"/>">
                     </div>
 
                     <div class="form-group">
                         <label for="calories" class="col-form-label"><spring:message code="meal.calories"/></label>
-                        <input type="number" class="form-control" id="calories" name="calories" placeholder="1000">
+                        <input type="number" class="form-control" id="calories" name="calories"
+                               placeholder="<spring:message code="meal.calories"/>">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     <spring:message code="common.cancel"/>
                 </button>
